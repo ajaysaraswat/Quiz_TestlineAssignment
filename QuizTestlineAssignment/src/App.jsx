@@ -10,7 +10,7 @@ import Result from "./components/Pages/Result/Result";
 import { quizContext } from "./context/Quiz";
 const apiUrl = "https://api.jsonserve.com/Uw5CrX";
 const App = () => {
-  // const {} = useContext(quizContext);
+  const { question, setQuestion, score, setScore } = useContext(quizContext);
 
   async function fetchQuestions() {
     try {
@@ -22,6 +22,7 @@ const App = () => {
       }
       const data = await response.json(); // Parse JSON response
       console.log("Fetched Data:", data);
+      setQuestion(data.questions || []);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
