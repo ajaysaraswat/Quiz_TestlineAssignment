@@ -4,11 +4,14 @@ import { createRoot } from "react-dom/client";
 import "./App.css";
 import App from "./App.jsx";
 import { BrowserRouter, Outlet } from "react-router-dom";
+import { QuizProvider } from "./context/Quiz.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <QuizProvider>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </QuizProvider>
   </StrictMode>
 );
