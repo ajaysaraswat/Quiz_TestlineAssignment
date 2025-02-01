@@ -7,6 +7,14 @@ export const QuizProvider = (props) => {
   const [currQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
   const [options, setOptions] = useState();
+  const [answers, setAnswers] = useState([]);
+
+  const updateAnswers = (selectedOption, correctedAnswer) => {
+    setAnswers((prev) => [
+      ...prev,
+      { Selected: selectedOption, Correct: correctedAnswer },
+    ]);
+  };
 
   return (
     <quizContext.Provider
@@ -17,6 +25,8 @@ export const QuizProvider = (props) => {
         score,
         setScore,
         setCurrentQuestion,
+        answers,
+        updateAnswers,
       }}
     >
       {props.children}

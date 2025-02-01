@@ -3,8 +3,14 @@ import { quizContext } from "../../context/Quiz";
 import { Link, useNavigate } from "react-router-dom";
 
 const Question = () => {
-  const { question, score, setScore, currQuestion, setCurrentQuestion } =
-    useContext(quizContext);
+  const {
+    question,
+    score,
+    setScore,
+    currQuestion,
+    setCurrentQuestion,
+    updateAnswers,
+  } = useContext(quizContext);
   const [selected, setSelected] = useState(null);
   const navigate = useNavigate();
 
@@ -18,6 +24,7 @@ const Question = () => {
 
   const handleSelect = (index, isCorrect) => {
     setSelected(index);
+    updateAnswers(index, isCorrect);
     if (isCorrect) {
       setScore((prevScore) => prevScore + 4);
     } else {
@@ -31,6 +38,7 @@ const Question = () => {
       setCurrentQuestion((prev) => prev + 1);
     } else {
       alert(`Quiz Completed! Your Score: ${score}`);
+      navigate("/result");
     }
   };
   const handleQuit = () => {
