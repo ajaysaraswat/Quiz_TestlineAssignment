@@ -3,7 +3,7 @@ import { quizContext } from "../../../context/Quiz";
 import { useNavigate } from "react-router-dom";
 
 const Result = () => {
-  const { candidateName, score, answers, question } = useContext(quizContext);
+  const { name, score, answers, question } = useContext(quizContext);
   const navigate = useNavigate();
   console.log("answer", answers);
 
@@ -25,7 +25,7 @@ const Result = () => {
     <div className="flex justify-center items-center ">
       <div className="p-8 bg-white shadow-md rounded-md w-full">
         <h1 className="text-3xl font-bold mb-6 text-center">Quiz Results</h1>
-        <h2 className="text-xl mb-4 text-center">Candidate: {candidateName}</h2>
+        <h2 className="text-xl mb-4 text-center">Candidate: {name}</h2>
         <h2 className="text-xl mb-6 text-center bold">Score: {score}</h2>
 
         <div className="mb-6">

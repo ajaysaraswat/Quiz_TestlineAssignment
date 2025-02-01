@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { quizContext } from "../../../context/Quiz";
 const Home = ({ fetchQuestions }) => {
+  const { name, setName } = useContext(quizContext);
+
   const [category, setCategory] = useState("");
-  const [name, setName] = useState("");
+
   const [error, setError] = useState(false);
 
   const navigate = useNavigate();

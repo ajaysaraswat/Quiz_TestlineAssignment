@@ -3,6 +3,7 @@ import React from "react";
 export const quizContext = createContext(null);
 
 export const QuizProvider = (props) => {
+  const [name, setName] = useState("");
   const [question, setQuestion] = useState();
   const [currQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
@@ -19,6 +20,8 @@ export const QuizProvider = (props) => {
   return (
     <quizContext.Provider
       value={{
+        name,
+        setName,
         currQuestion,
         question,
         setQuestion,

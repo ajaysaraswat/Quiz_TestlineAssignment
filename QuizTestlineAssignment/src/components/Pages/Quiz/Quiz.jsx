@@ -3,7 +3,7 @@ import { quizContext } from "../../../context/Quiz";
 import Question from "../../Question/Question";
 
 const Quiz = () => {
-  const { question, setQuestion, score, setScore, currQuestion } =
+  const { name, question, setQuestion, score, setScore, currQuestion } =
     useContext(quizContext);
 
   useEffect(() => {
@@ -16,9 +16,7 @@ const Quiz = () => {
     <div className="flex flex-col items-center justify-center p-4">
       {/* Welcome Box */}
       <div className="bg-white shadow-md rounded-xl p-6 w-80 text-center">
-        <span className="text-2xl font-bold text-gray-800">
-          Welcome to the Quiz
-        </span>
+        <span className="text-2xl font-bold text-gray-800">Welcome {name}</span>
       </div>
 
       {/* Questions Section */}
