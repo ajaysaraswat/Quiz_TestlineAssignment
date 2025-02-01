@@ -1,43 +1,42 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { quizContext } from "../../context/Quiz";
+import { Link, useNavigate } from "react-router-dom";
 
 const Question = () => {
-  const { question, score, option, setScore, currQuestion, setCurrQuestion } =
+  const { question, score, setScore, currQuestion, setCurrentQuestion } =
     useContext(quizContext);
-  console.log("question====", question[currQuestion].options[0].is_correct);
   const [selected, setSelected] = useState(null);
+  const navigate = useNavigate();
 
   // Handle the case where data is not yet loaded
   if (!question || !question[currQuestion]) {
     return <p>Loading question...</p>;
   }
+  useEffect(() => {
+    console.log("curr", currQuestion);
+  }, []);
 
-  // const handleSelect = (i) => {
-  //   console.log(selected);
-  //   console.log(i);
-  //   if (selected === i.id && question[currQuestion].options[i].is_correct) {
-  //     setScore(score + 4);
-  //   } else if (
-  //     selected !== i.id ||
-  //     !question[currQuestion].options[i].is_correct
-  //   ) {
-  //     setScore(score - 1);
-  //   } else {
-  //     setScore(score);
-  //   }
-  // };
   const handleSelect = (index, isCorrect) => {
     setSelected(index);
     if (isCorrect) {
-      setScore((prevScore) => prevScore + 1);
+      setScore((prevScore) => prevScore + 4);
+    } else {
+      setScore((prevScore) => prevScore - 1);
     }
   };
+
   const handleNext = () => {
     setSelected(null);
     if (currQuestion < question.length - 1) {
-      setCurrQuestion((prev) => prev + 1);
+      setCurrentQuestion((prev) => prev + 1);
     } else {
       alert(`Quiz Completed! Your Score: ${score}`);
+    }
+  };
+  const handleQuit = () => {
+    if (window.confirm("Are you sure you want to quit the quiz?")) {
+      // Add any cleanup logic here (reset score, stop timer, etc.)
+      navigate("/"); // Navigate to home page (or any page you want)
     }
   };
 
@@ -50,28 +49,38 @@ const Question = () => {
         {question[currQuestion].options.map((i, index) => (
           <button
             key={index}
-            onClick={() => {
-              console.log("i", i.id);
-              setSelected(i.id);
-
-              handleSelect(
-                index,
-                question[currQuestion].options[index].is_correct
-              );
-
-              console.log("fun is run");
-            }}
+            onClick={() => handleSelect(index, i.is_correct)}
             disabled={selected !== null}
-            className={`p-2 rounded-md border ${
-              selected === i ? "bg-blue-500 text-white" : "bg-gray-200"
-            } ${selected && handleSelect} `}
+            className={`p-2 rounded-md border 
+              ${selected === index ? "bg-green-200 " : ""}
+              ${selected === null ? "bg-gray-200" : ""}
+            `}
           >
             {i.description}
           </button>
         ))}
-        <button onClick={handleNext} disabled={selected === null}>
-          Next
-        </button>
+        <div className="flex gap-4 mt-6 justify-center">
+          <button
+            onClick={handleNext}
+            disabled={selected === null}
+            className={`px-8 py-3 rounded-lg text-white font-semibold 
+      ${
+        selected === null
+          ? "bg-blue-500 cursor-not-allowed opacity-50"
+          : "bg-blue-600 hover:bg-blue-700 focus:outline-none"
+      } 
+      transition duration-300 ease-in-out`}
+          >
+            Next
+          </button>
+
+          <button
+            onClick={handleQuit} // Implement quit logic
+            className=" px-8 py-3 rounded-lg bg-red-500 text-white font-semibold hover:bg-red-600 focus:outline-none transition duration-300 ease-in-out"
+          >
+            Quit
+          </button>
+        </div>
       </div>
     </div>
   );

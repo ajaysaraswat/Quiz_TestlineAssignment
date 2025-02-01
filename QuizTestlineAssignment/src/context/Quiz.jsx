@@ -4,9 +4,9 @@ export const quizContext = createContext(null);
 
 export const QuizProvider = (props) => {
   const [question, setQuestion] = useState();
+  const [currQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
   const [options, setOptions] = useState();
-  const [currQuestion, setCurrentQuestion] = useState(0);
 
   return (
     <quizContext.Provider
